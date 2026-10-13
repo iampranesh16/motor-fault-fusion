@@ -1,4 +1,8 @@
 import os
+import sys
+# Add the root directory to Python's path so Streamlit Cloud can find 'src'
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import streamlit as st
 import numpy as np
 import pandas as pd
