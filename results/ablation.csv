@@ -1,0 +1,6 @@
+mode,macro_f1,ci_95_low,ci_95_high,raw_false_alarm_pct,persisted_fa_per_hour,host_latency_ms
+acoustic_only,0.8057,0.7552,0.8565,11.25,0.0,2.22
+hall_only,0.2402,0.1937,0.2902,88.75,360.0,2.21
+naive_fusion,0.8,0.7401,0.8436,7.5,0.0,2.22
+fusion_sync,0.8796,0.8373,0.917,0.0,0.0,2.57
+full_proposed,1.0,1.0,1.0,0.0,0.0,2.74
