@@ -1,0 +1,329 @@
+{
+  "split": "GroupShuffleSplit by file_name, test_size=0.20, random_state=42",
+  "n_train_windows": 970,
+  "n_test_windows": 250,
+  "n_train_recordings": 97,
+  "n_test_recordings": 25,
+  "test_recordings": [
+    "B_R_1_0.mat",
+    "B_R_3_0.mat",
+    "B_R_6_0.mat",
+    "B_R_6_1.mat",
+    "F_B_3_0.mat",
+    "F_B_6_0.mat",
+    "F_B_7_1.mat",
+    "H_H_2_0.mat",
+    "H_H_6_1.mat",
+    "H_H_8_1.mat",
+    "K_A_1_0.mat",
+    "K_A_2_0.mat",
+    "K_A_5_0.mat",
+    "K_A_6_1.mat",
+    "K_A_7_0.mat",
+    "R_M_2_0.mat",
+    "R_M_4_0.mat",
+    "R_U_1_0.mat",
+    "R_U_8_1.mat",
+    "S_W_1_0.mat",
+    "S_W_5_0.mat",
+    "V_U_1_1.mat",
+    "V_U_2_1.mat",
+    "V_U_5_1.mat",
+    "V_U_7_1.mat"
+  ],
+  "note": "Acoustic-only comparison. Ottawa acoustic recordings and speed metadata are real; magnetic feature columns are excluded because preprocessing synthesizes Hall channels from the known class label.",
+  "synced": {
+    "accuracy": 0.256,
+    "macro_f1": 0.2632357761034232,
+    "weighted_f1": 0.26797864386099685,
+    "classes": [
+      "bearing",
+      "bowed_rotor",
+      "broken_rotor_bar",
+      "healthy",
+      "imbalance",
+      "misalignment",
+      "stator_winding",
+      "voltage_unbalance"
+    ],
+    "confusion_matrix": [
+      [
+        1,
+        2,
+        1,
+        0,
+        6,
+        14,
+        3,
+        3
+      ],
+      [
+        3,
+        4,
+        1,
+        0,
+        1,
+        24,
+        1,
+        6
+      ],
+      [
+        7,
+        3,
+        8,
+        1,
+        5,
+        13,
+        9,
+        4
+      ],
+      [
+        2,
+        1,
+        1,
+        20,
+        1,
+        4,
+        1,
+        0
+      ],
+      [
+        10,
+        0,
+        0,
+        0,
+        1,
+        6,
+        2,
+        1
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        9,
+        8,
+        0
+      ],
+      [
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11,
+        1
+      ],
+      [
+        2,
+        2,
+        3,
+        0,
+        3,
+        12,
+        8,
+        10
+      ]
+    ],
+    "per_class": {
+      "bearing": {
+        "precision": 0.027777777777777776,
+        "recall": 0.03333333333333333,
+        "f1": 0.030303030303030304,
+        "support": 30
+      },
+      "bowed_rotor": {
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "f1": 0.15384615384615385,
+        "support": 40
+      },
+      "broken_rotor_bar": {
+        "precision": 0.5714285714285714,
+        "recall": 0.16,
+        "f1": 0.25,
+        "support": 50
+      },
+      "healthy": {
+        "precision": 0.9523809523809523,
+        "recall": 0.6666666666666666,
+        "f1": 0.7843137254901961,
+        "support": 30
+      },
+      "imbalance": {
+        "precision": 0.058823529411764705,
+        "recall": 0.05,
+        "f1": 0.05405405405405406,
+        "support": 20
+      },
+      "misalignment": {
+        "precision": 0.10975609756097561,
+        "recall": 0.45,
+        "f1": 0.17647058823529413,
+        "support": 20
+      },
+      "stator_winding": {
+        "precision": 0.2558139534883721,
+        "recall": 0.55,
+        "f1": 0.3492063492063492,
+        "support": 20
+      },
+      "voltage_unbalance": {
+        "precision": 0.4,
+        "recall": 0.25,
+        "f1": 0.3076923076923077,
+        "support": 40
+      }
+    }
+  },
+  "unsynced": {
+    "accuracy": 0.116,
+    "macro_f1": 0.12765617438255358,
+    "weighted_f1": 0.11795927461114525,
+    "classes": [
+      "bearing",
+      "bowed_rotor",
+      "broken_rotor_bar",
+      "healthy",
+      "imbalance",
+      "misalignment",
+      "stator_winding",
+      "voltage_unbalance"
+    ],
+    "confusion_matrix": [
+      [
+        1,
+        0,
+        0,
+        0,
+        3,
+        15,
+        4,
+        7
+      ],
+      [
+        0,
+        0,
+        0,
+        6,
+        5,
+        3,
+        15,
+        11
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        6,
+        30,
+        7,
+        5
+      ],
+      [
+        2,
+        1,
+        2,
+        20,
+        0,
+        1,
+        1,
+        3
+      ],
+      [
+        9,
+        0,
+        1,
+        0,
+        2,
+        3,
+        2,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11,
+        9
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        13,
+        3,
+        2
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        1,
+        21,
+        13,
+        3
+      ]
+    ],
+    "per_class": {
+      "bearing": {
+        "precision": 0.08333333333333333,
+        "recall": 0.03333333333333333,
+        "f1": 0.047619047619047616,
+        "support": 30
+      },
+      "bowed_rotor": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 40
+      },
+      "broken_rotor_bar": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 50
+      },
+      "healthy": {
+        "precision": 0.7692307692307693,
+        "recall": 0.6666666666666666,
+        "f1": 0.7142857142857143,
+        "support": 30
+      },
+      "imbalance": {
+        "precision": 0.11764705882352941,
+        "recall": 0.1,
+        "f1": 0.10810810810810811,
+        "support": 20
+      },
+      "misalignment": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 20
+      },
+      "stator_winding": {
+        "precision": 0.05357142857142857,
+        "recall": 0.15,
+        "f1": 0.07894736842105263,
+        "support": 20
+      },
+      "voltage_unbalance": {
+        "precision": 0.06976744186046512,
+        "recall": 0.075,
+        "f1": 0.07228915662650602,
+        "support": 40
+      }
+    }
+  }
+}
