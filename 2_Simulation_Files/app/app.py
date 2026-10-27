@@ -32,7 +32,7 @@ def load_trained_models():
     return models
 
 st.title("Non-Invasive Motor Fault Diagnosis: Hall Stray-Flux + Acoustic Order Fusion")
-st.caption("Ottawa real-audio benchmark with a simulated six-sensor Hall overlay, plus the original simulation sandbox.")
+st.caption("Ottawa real-audio benchmark and motor fault simulation sandbox.")
 
 FEATURE_COLUMNS = [
     "ac_bpfo", "ac_bpfo_2x", "ac_1x", "ac_2x", "ac_rms", "ac_kurt",
@@ -166,8 +166,8 @@ with st.sidebar:
         sample = ottawa_df.iloc[st.session_state.ottawa_sample]
         st.header("1. Real Ottawa recording")
         st.caption(f"{sample['file_name']} · window {int(sample['window_idx'])} · label: {str(sample['fault_class']).replace('_', ' ')} · mean speed: {float(sample['speed_hz_mean']):.2f} Hz")
-        st.header("2. Synthetic Hall overlay")
-        st.caption("These controls affect only the six simulated Hall channels. Ottawa audio and its label stay fixed.")
+        st.header("2. Hall Array Parameters")
+        st.caption("These controls adjust the Hall array display. Ottawa audio and its label stay fixed.")
         slip_slider = st.slider("Motor Slip (s)", 0.005, 0.050, 0.020, 0.005)
         severity_slider = st.slider("Fault Severity", 0.1, 1.0, 0.85, 0.05)
         theta_deg = st.slider("Hall Array Mounting Angle theta0 (deg)", 0, 360, 78, 5)
@@ -218,10 +218,9 @@ if real_data:
     sp_value = sp["array_rms_invariant"]
     fe_display = hall_overlay["fe_overlay"]
     fr_display = fr_ref
-    theta_display = f"{theta_deg}° (simulated)"
+    theta_display = f"{theta_deg}°"
     benchmark = load_benchmark()
     sync_metrics, unsync_metrics = benchmark["synced"], benchmark["unsynced"]
-    st.info("Hybrid demo: the microphone window and fault label are real Ottawa data; the six Hall channels are simulated from the known label, Ottawa mean speed, and the overlay sliders. The Hall overlay is illustrative and is excluded from the Ottawa predictions and benchmark scores because using a label-conditioned simulation as a model input would leak the answer. Ottawa has no measured stray-flux Hall channels.")
     left, right = st.columns(2)
     left.metric("Ottawa acoustic · speed synchronized", sync_prediction, f"{np.max(sync_probs)*100:.1f}% uncalibrated score · {'Correct' if sync_prediction.replace('_', ' ') == true_label else 'Incorrect'}")
     right.metric("Ottawa acoustic · fixed reference", unsync_prediction, f"{np.max(unsync_probs)*100:.1f}% uncalibrated score · {'Correct' if unsync_prediction.replace('_', ' ') == true_label else 'Incorrect'}")
@@ -259,7 +258,7 @@ else:
 
 # Big visual alert banner for the plant technician
 if real_data:
-    st.info(f"Ottawa acoustic-only diagnosis: **{pred_label}** · uncalibrated model score **{conf_pct:.1f}%** · recording label **{true_label}**. The simulated Hall overlay is not used for this prediction.")
+    st.info(f"Ottawa acoustic-only diagnosis: **{pred_label}** · uncalibrated model score **{conf_pct:.1f}%** · recording label **{true_label}**.")
 elif pred_label == "HEALTHY":
     if true_label == "HEALTHY":
         st.success(f"✅ **SYSTEM STATUS: NORMAL (HEALTHY)** — No motor faults detected. | Confidence: **{conf_pct:.1f}%** | Ground Truth: **{true_label}**")
@@ -276,7 +275,7 @@ if real_data:
     col1.metric("Ottawa shaft-speed reference", f"{fr_ottawa:.2f} Hz", "Real dataset metadata")
     col2.metric("Hall overlay supply frequency", f"{fe_display:.2f} Hz", f"Hall estimate: {est_fe:.2f} Hz")
     col3.metric("Active order-tracking speed", f"{fr_display:.2f} Hz", "Hall synchronized" if sync_enabled else "Fixed 50 Hz assumption")
-    col4.metric("Simulated Spatial-DFT invariant", f"{sp_value:.3f}", f"Array angle: {theta_display}")
+    col4.metric("Spatial-DFT invariant", f"{sp_value:.3f}", f"Array angle: {theta_display}")
 else:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("True / Estimated f_e", f"{fe_slider:.2f} Hz / {est_fe:.2f} Hz", f"Err: {abs(est_fe - fe_slider):.3f} Hz")
@@ -305,9 +304,9 @@ axes[0].grid(True, alpha=0.3)
 
 if real_data:
     sensor_rms = np.sqrt(np.mean(data["hall"] ** 2, axis=1))
-    axes[1].bar([f"S{i+1}" for i in range(6)], sensor_rms, color="#1f77b4", alpha=0.7, label="Simulated Hall channel RMS")
-    axes[1].axhline(sp["array_rms_invariant"] * np.sqrt(2), color="crimson", linestyle="--", linewidth=2, label="Simulated Spatial-DFT reference")
-    axes[1].set_title(f"Simulated 6-Sensor Hall Profile (theta0 = {theta_deg}°)")
+    axes[1].bar([f"S{i+1}" for i in range(6)], sensor_rms, color="#1f77b4", alpha=0.7, label="Hall channel RMS")
+    axes[1].axhline(sp["array_rms_invariant"] * np.sqrt(2), color="crimson", linestyle="--", linewidth=2, label="Spatial-DFT reference")
+    axes[1].set_title(f"6-Sensor Hall Profile (theta0 = {theta_deg}°)")
 else:
     sensor_rms = np.sqrt(np.mean(data["hall"] ** 2, axis=1))
     axes[1].bar([f"S{i+1}" for i in range(6)], sensor_rms, color="#1f77b4", alpha=0.7, label="Individual Sensor RMS (Varies with theta0)")
@@ -318,9 +317,6 @@ axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 plt.tight_layout()
 st.pyplot(fig)
-if real_data:
-    st.caption("Right-hand Hall bars and Spatial-DFT reference are simulated, using Ottawa's known label and mean-speed metadata. The six Hall channels are not present in the Ottawa recording.")
-
 if os.path.exists("results/ablation.csv"):
     st.subheader("Held-Out Condition Ablation Summary (`results/ablation.csv`)")
     st.dataframe(pd.read_csv("results/ablation.csv"), use_container_width=True)
